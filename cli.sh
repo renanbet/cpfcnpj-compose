@@ -24,5 +24,8 @@ then
         cd $Project
         git pull origin $2
         cd ..
+        cd tests/$Project
+        git pull origin $2
+        cd ../..
       done
 fi
