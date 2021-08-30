@@ -1,0 +1,7 @@
+cpfcnpj-server
+cpfcnpj-client
+database
+tests/cpfcnpj-client
+tests/cpfcnpj-server
+tests/database
+.editorconfig

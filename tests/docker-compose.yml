@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  cpfcnpjapitest:
+    container_name: cpfcnpj-server-test
+    build:
+      context: "./cpfcnpj-server"
+      dockerfile: "dockerfile-test"
+    restart: always
+    environment:
+      SECRET: mysecretkey
+      TOKEN_EXP: 60000
+      DB_HOST: dbtest
+      DB_PORT: 27017
+      DB_NAME: cpfcnpj
+      TEST_DB_NAME: test
+    depends_on:
+      - "dbtest"
+  cpfcnpjdbtest:
+    image: mongo
+    container_name: cpfcnpj-db-test
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./database:/data/db
+    restart: unless-stopped
+  cpfcnpjclienttest:
+    container_name: cpfcnpj-client-teste
+    build: "./cpfcnpj-client"
+    ports:
+      - 8080:80

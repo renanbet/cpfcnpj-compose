@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  cpfcnpjapi:
+    container_name: cpfcnpj-server
+    build: "./cpfcnpj-server"
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      SECRET: mysecretkey
+      TOKEN_EXP: 60000
+      DB_HOST: cpfcnpjdb
+      DB_PORT: 27017
+      DB_NAME: cpfcnpj
+      TEST_DB_NAME: test
+    depends_on:
+      - "cpfcnpjdb"
+  cpfcnpjdb:
+    image: mongo
+    container_name: cpfcnpj-db
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./database:/data/db
+    restart: unless-stopped
+  cpfcnpjclient:
+    container_name: cpfcnpj-client
+    build: "./cpfcnpj-client"
+    ports:
+      - 8080:80
