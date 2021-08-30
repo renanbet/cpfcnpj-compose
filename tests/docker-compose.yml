@@ -9,12 +9,12 @@ services:
     environment:
       SECRET: mysecretkey
       TOKEN_EXP: 60000
-      DB_HOST: dbtest
+      DB_HOST: cpfcnpjdbtest
       DB_PORT: 27017
       DB_NAME: cpfcnpj
       TEST_DB_NAME: test
     depends_on:
-      - "dbtest"
+      - "cpfcnpjdbtest"
   cpfcnpjdbtest:
     image: mongo
     container_name: cpfcnpj-db-test
@@ -25,7 +25,9 @@ services:
       - ./database:/data/db
     restart: unless-stopped
   cpfcnpjclienttest:
-    container_name: cpfcnpj-client-teste
-    build: "./cpfcnpj-client"
+    container_name: cpfcnpj-client-test
+    build:
+      context: "./cpfcnpj-client"
+      dockerfile: "dockerfile-test"
     ports:
       - 8080:80
